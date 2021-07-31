@@ -1,16 +1,22 @@
 var generic_viewer = (function () {
-  var coordinateRegex = /\{\{([XY])(?::(.)(\d+))?\}\}/gi;
-  function fillTemplate(tpl, coords) {
-    return tpl.replace(coordinateRegex, function (base, coord, padding, widthStr) {
-      var width = widthStr | 0;
-      var padding = padding || "";
-      var n = coords[coord.toLowerCase()];
-      var result = n.toString();
-      while (result.length < width) {
-        result = padding + result;
+  function createQuadKey(x, y, z) {
+      const quadKey = [];
+      for (var i = z; i > 0; i--) {
+          let digit = '0';
+          let mask = 1 << (i - 1);
+          if ((x & mask) !== 0) {
+              digit++;
+          }
+          if ((y & mask) !== 0) {
+              digit++;
+              digit++;
+          }
+          quadKey.push(digit);
       }
-      return result;
-    });
+      return quadKey.join('');
+  }
+  function fillTemplate(tpl, coords) {
+    return tpl+createQuadKey(coords.x, coords.y, 7)+".jpg";
   }
   return {
     "name": "Generic dezoomer",
