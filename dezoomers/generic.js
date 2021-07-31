@@ -22,7 +22,7 @@ var generic_viewer = (function () {
     "name": "Generic dezoomer",
     "description": "Just put the url of a tile, replacing it's horizontal coordinate by {{X}} and vertical coordinate by {{Y}}.",
     "urls": [
-      coordinateRegex
+      "*"
     ],
     "open": function (url) {
       var current_dimension = 0;
